@@ -206,16 +206,17 @@ export default function plotComponentFactory(Plotly) {
     // Attach and remove event handlers as they're added or removed from props:
     syncEventHandlers() {
       eventNames.forEach(eventName => {
-        const prop = this.props['on' + eventName];
-        const hasHandler = Boolean(this.handlers[eventName]);
+        const newHandler = this.props['on' + eventName];
+        const plotlyEventName = 'plotly_' + eventName.toLowerCase();
 
-        if (prop && !hasHandler) {
-          this.handlers[eventName] = prop;
-          this.el.on('plotly_' + eventName.toLowerCase(), this.handlers[eventName]);
-        } else if (!prop && hasHandler) {
-          // Needs to be removed:
-          this.el.removeListener('plotly_' + eventName.toLowerCase(), this.handlers[eventName]);
+        if (currentHandler) {
+          this.el.removeListener(plotlyEventName, currentHandler);
           delete this.handlers[eventName];
+        }
+
+        if (newHandler) {
+          this.handlers[eventName] = newHandler;
+          this.el.on(plotl, this.handlers[eventName]);
         }
       });
     }

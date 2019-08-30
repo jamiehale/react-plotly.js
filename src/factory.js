@@ -217,7 +217,7 @@ export default function plotComponentFactory(Plotly) {
 
         if (newHandler) {
           this.handlers[eventName] = newHandler;
-          this.el.on(plotl, this.handlers[eventName]);
+          this.el.on(plotlyEventName, this.handlers[eventName]);
         }
       });
     }

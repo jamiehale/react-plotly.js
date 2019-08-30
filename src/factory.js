@@ -207,6 +207,7 @@ export default function plotComponentFactory(Plotly) {
     syncEventHandlers() {
       eventNames.forEach(eventName => {
         const newHandler = this.props['on' + eventName];
+        const currentHandler = this.handlers[eventName];
         const plotlyEventName = 'plotly_' + eventName.toLowerCase();
 
         if (currentHandler) {
